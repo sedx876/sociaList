@@ -1,7 +1,27 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const morgan = require('morgan')
+const bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
+const expressValidator = require('express-validator')
+const fs = require('fs')
+const cors = require('cors')
 const chalk = require('chalk')
+const dotenv = require('dotenv')
 const colors = require('colors')
+
+dotenv.config()
+
+// configure db
+mongoose.connect(
+	process.env.MONGO_URI,
+	{useNewUrlParser: true, useUnifiedTopology: true}
+)
+.then(() => console.log('DB Connected'.brightMagenta.inverse))
+
+mongoose.connection.on('error', err => {
+	console.log(`DB connection error: ${err.message}`.red.inverse)
+})
 
 const app = express()
 
@@ -26,12 +46,12 @@ app.use(morganMiddleware)
 
 
 //Bring in Routes
-const { getPosts } = require('./routes/post')
+const postRoutes = require('./routes/post')
 
 
-app.get('/', getPosts)
+app.use("/", postRoutes)
 
-const port = 8080
+const port = process.env.PORT || 8080
 
 app.listen(port, () => 
-{console.log(`A NODE API is listening on port ${port}`.magenta.inverse)})
+{console.log(`NODE API is listening on port ${port}`.brightCyan.inverse)})
