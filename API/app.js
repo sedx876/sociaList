@@ -43,6 +43,8 @@ const morganMiddleware = morgan(function (tokens, req, res) {
 });
 
 app.use(morganMiddleware)
+app.use(bodyParser.json())
+app.use(expressValidator())
 
 
 //Bring in Routes
