@@ -45,13 +45,19 @@ const morganMiddleware = morgan(function (tokens, req, res) {
 app.use(morganMiddleware)
 app.use(bodyParser.json())
 app.use(expressValidator())
+app.use(cors())
+
 
 
 //Bring in Routes
 const postRoutes = require('./routes/post')
+const authRoutes = require('./routes/auth')
+// const userRoutes = require('./routes/user')
 
 
 app.use("/", postRoutes)
+app.use('/api', authRoutes)
+// app.use('/api', userRoutes)
 
 const port = process.env.PORT || 8080
 
