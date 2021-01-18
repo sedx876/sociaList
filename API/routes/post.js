@@ -1,11 +1,12 @@
 const express = require('express')
-const postController = require('../controllers/post')
+const {getPosts, createPost} = require('../controllers/post')
+const validator = require('../helpers/index')
 
 const router = express.Router()
 
 router
-  .get('/', postController.getPosts)
-  .post('/post', postController.createPost)
+  .get('/', getPosts)
+  .post('/post', validator.createPostValidator, createPost)
 
 
 
