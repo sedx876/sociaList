@@ -53,12 +53,18 @@ app.use(cors())
 //Bring in Routes
 const postRoutes = require('./routes/post')
 const authRoutes = require('./routes/auth')
-// const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user')
 
 
 app.use("/api", postRoutes)
 app.use('/api', authRoutes)
-// app.use('/api', userRoutes)
+app.use('/api', userRoutes)
+
+app.use(function(err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+      res.status(401).json({ error: 'Unauthorized!' });
+  }
+})
 
 const port = process.env.PORT || 8080
 
