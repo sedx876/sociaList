@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 const expressValidator = require('express-validator')
 const fs = require('fs')
 const cors = require('cors')
@@ -25,7 +25,7 @@ mongoose.connection.on('error', err => {
 
 const app = express()
 
-//Morgan middleware
+//Middleware
 const morganMiddleware = morgan(function (tokens, req, res) {
   return [
       '\n\n\n',
@@ -44,6 +44,7 @@ const morganMiddleware = morgan(function (tokens, req, res) {
 
 app.use(morganMiddleware)
 app.use(bodyParser.json())
+app.use(cookieParser())
 app.use(expressValidator())
 app.use(cors())
 
