@@ -1,10 +1,12 @@
-import './App.css';
+import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import MainRouter from './MainRouter'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>HELLO DUDES</h1>
-    </div>
+    <BrowserRouter>
+      <MainRouter/>
+    </BrowserRouter>
   );
 }
 
