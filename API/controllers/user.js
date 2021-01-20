@@ -20,37 +20,37 @@ exports.userById = (req, res, next, id) => {
 }
 
 exports.hasAuthorization = (req, res, next) => {
-  let sameUser = req.profile && req.auth && req.profile._id == req.auth._id;
-  let adminUser = req.profile && req.auth && req.auth.role === 'admin';
+  let sameUser = req.profile && req.auth && req.profile._id == req.auth._id
+  let adminUser = req.profile && req.auth && req.auth.role === 'admin'
 
-  const authorized = sameUser || adminUser;
+  const authorized = sameUser || adminUser
 
-  // console.log("req.profile ", req.profile, " req.auth ", req.auth);
-  // console.log("SAMEUSER", sameUser, "ADMINUSER", adminUser);
+  console.log("req.profile ", req.profile, " req.auth ", req.auth)
+  console.log("SAMEUSER", sameUser, "ADMINUSER", adminUser)
 
   if (!authorized) {
       return res.status(403).json({
           error: 'User is not authorized to perform this action'
-      });
+      })
   }
-  next();
-};
+  next()
+}
 
 exports.allUsers = (req, res) => {
   User.find((err, users) => {
       if (err) {
           return res.status(400).json({
               error: err
-          });
+          })
       }
       res.json(users);
   }).select('name email updated created role');
-};
+}
 
 exports.getUser = (req, res) => {
-  req.profile.hashed_password = undefined;
-  req.profile.salt = undefined;
-  return res.json(req.profile);
+  req.profile.hashed_password = undefined
+  req.profile.salt = undefined
+  return res.json(req.profile)
 };
 
 // exports.updateUser = (req, res, next) => {
