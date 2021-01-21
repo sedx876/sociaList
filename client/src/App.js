@@ -7,7 +7,7 @@ const App = () => {
     <BrowserRouter>
       <MainRouter/>
     </BrowserRouter>
-  );
+  )
 }
 
 export default App;
