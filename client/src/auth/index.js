@@ -1,32 +1,62 @@
-export const signup = user => {
-  return fetch(`${process.env.REACT_APP_API_URL}/signup`, {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-  })
-      .then(response => {
-          return response.json();
-      })
-      .catch(err => console.log(err));
-};
+// export const signup = user => {
+//   return fetch(`${process.env.REACT_APP_API_URL}/signup`, {
+//       method: 'POST',
+//       headers: {
+//           Accept: 'application/json',
+//           'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(user)
+//   })
+//       .then(response => {
+//           return response.json();
+//       })
+//       .catch(err => console.log(err));
+// }
 
-export const signin = user => {
-  return fetch(`${process.env.REACT_APP_API_URL}/signin`, {
-      method: 'POST',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
+export const signup = (user) => {
+  return fetch('http://localhost:8080/api/signup', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
   })
-      .then(response => {
-          return response.json();
-      })
-      .catch(err => console.log(err));
-};
+  .then(response => {
+    return response.json()
+  })
+  .catch(err => console.table(err))
+}
+
+// export const signin = user => {
+//   return fetch(`${process.env.REACT_APP_API_URL}/signin`, {
+//       method: 'POST',
+//       headers: {
+//           Accept: 'application/json',
+//           'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(user)
+//   })
+//       .then(response => {
+//           return response.json();
+//       })
+//       .catch(err => console.log(err));
+// };
+
+export const signin = (user) => {
+  return fetch('http://localhost:8080/api/signin', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  })
+  .then(response => {
+    return response.json()
+  })
+  .catch(err => console.table(err))
+}
 
 export const authenticate = (jwt, next) => {
   if (typeof window !== 'undefined') {
@@ -42,18 +72,31 @@ export const setName = (name, next) => {
   }
 };
 
+// export const signout = next => {
+//   if (typeof window !== 'undefined') localStorage.removeItem('jwt');
+//   next();
+//   return fetch(`${process.env.REACT_APP_API_URL}/signout`, {
+//       method: 'GET'
+//   })
+//       .then(response => {
+//           console.log('signout', response);
+//           return response.json();
+//       })
+//       .catch(err => console.log(err));
+// };
+
 export const signout = next => {
-  if (typeof window !== 'undefined') localStorage.removeItem('jwt');
-  next();
-  return fetch(`${process.env.REACT_APP_API_URL}/signout`, {
+  if (typeof window !== 'undefined') localStorage.removeItem('jwt')
+  next()
+  return fetch('http://localhost:8080/api/signout', {
       method: 'GET'
   })
       .then(response => {
-          console.log('signout', response);
-          return response.json();
+          console.table('signout', response)
+          return response.json()
       })
-      .catch(err => console.log(err));
-};
+      .catch(err => console.table(err))
+}
 
 export const isAuthenticated = () => {
   if (typeof window == 'undefined') {

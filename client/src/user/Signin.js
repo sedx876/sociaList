@@ -24,7 +24,7 @@ class Signin extends Component{
         password
     }
     console.table(user)
-    this.signin(user)
+    signin(user)
     .then(data => {
       if(data.error) {
         this.setState({ error: data.error, loading: false })
@@ -36,20 +36,6 @@ class Signin extends Component{
     })
   }
 
-  signin = (user) => {
-    return fetch('http://localhost:8080/api/signin', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-    .then(response => {
-      return response.json()
-    })
-    .catch(err => console.table(err))
-  }
 
 
   handleChange = name => event => {
