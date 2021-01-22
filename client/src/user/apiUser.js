@@ -1,5 +1,5 @@
 export const read = (userId, token) => {
-  return fetch(`${process.env.REACT_APP_API_URL}/api/user/${userId}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/user/${userId}`, {
       method: "GET",
       headers: {
           Accept: "application/json",
