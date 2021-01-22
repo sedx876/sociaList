@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link, Redirect } from "react-router-dom"
 import { signin, authenticate } from "../auth"
 
 class Signin extends Component{
@@ -9,12 +10,14 @@ class Signin extends Component{
       email: '',
       password: '',
       error: '',
-      redirectToReferer: false
+      redirectToReferer: false,
+      loading: false
     }
   }
 
   clickSubmit = event => {
     event.preventDefault()
+    this.setState({loading: true})
     const { email, password } = this.state
     const user = {
         email,
@@ -24,7 +27,7 @@ class Signin extends Component{
     this.signin(user)
     .then(data => {
       if(data.error) {
-        this.setState({ error: data.error })
+        this.setState({ error: data.error, loading: false })
       }else{ 
         authenticate(data, () => {
           this.setState({ redirectToReferer: true })
@@ -81,7 +84,11 @@ class Signin extends Component{
   )
 
   render(){
-    const { email, password, error } = this.state
+    const { email, password, error, redirectToReferer, loading } = this.state
+    
+    if (redirectToReferer) {
+      return <Redirect to="/" />;
+  }
     return(
       <div className='container'>
         <h2 className='mt-5 mb-5'>Log In</h2>
@@ -91,6 +98,11 @@ class Signin extends Component{
         style={{ display: error ? '' : 'none'}}>
           {error}
       </div>
+      {loading ? (
+      <div className='jumbotron text-center'><h2>Loading...</h2></div>
+      ):(
+        ''
+      )}
         {this.signinForm(email, password)}
       </div>
     )
