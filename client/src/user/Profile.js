@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import {Redirect, Link} from 'react-router-dom'
 import {isAuthenticated} from '../auth'
 import { read } from "./apiUser"
+import DefaultProfile from '../images/avatar.jpg'
+import DeleteUser from './DeleteUser'
 
 class Profile extends Component {
 
@@ -33,19 +35,31 @@ class Profile extends Component {
     this.init(userId)
   }
 
+  componentWillReceiveProps(props) {
+    const userId = props.match.params.userId;
+    this.init(userId);
+  }
+
   render() {
     const { redirectToSignin, user, posts } = this.state
     if (redirectToSignin) return <Redirect to="/signin" />
 
     return (
       <div className='container'>
+        <h2 className='mt-5 mb-5 text-primary text-center'>
+          <strong>sociaList Profile</strong>
+        </h2>
         <div className='row'>
         <div className='col-md-6'>
-        <h2 className='mt-5 mb-5 text-primary'><strong>sociaList Profile</strong></h2>
         <div className='card bg-light mb-5 border-primary p-2 text-primary'
           style={{width: '18rem'}}>
-        <p><strong>Hello</strong> {isAuthenticated().user.name}</p>
-        <p><strong>Email:</strong> {isAuthenticated().user.email}</p>
+        <p className='text-center'><strong>Hello</strong> {user.name}</p>
+        <img className='card-img-top' 
+          src={DefaultProfile} 
+          alt={user.name}
+          style={{width: '100%', height: '15vw', objectFit: 'cover'}}
+        />
+        <p className='pt-3'><strong>Email:</strong> {user.email}</p>
         <p>
           <strong>Joined: </strong> 
           {`${new Date(user.created).toDateString()}`}
@@ -61,7 +75,7 @@ class Profile extends Component {
                 to={`/user/edit/${this.state.user._id}`}>
                 Edit Profile
               </Link>
-              <button className='btn btn-raised btn btn-outline-danger'>Delete Profile</button>
+              <DeleteUser/>
             </div>
           )}
         </div>
