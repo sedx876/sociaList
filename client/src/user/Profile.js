@@ -42,7 +42,8 @@ class Profile extends Component {
         <div className='row'>
         <div className='col-md-6'>
         <h2 className='mt-5 mb-5 text-primary'><strong>sociaList Profile</strong></h2>
-        <div className='card bg-light mb-5 border-primary p-2 text-center'>
+        <div className='card bg-light mb-5 border-primary p-2 text-primary'
+          style={{width: '18rem'}}>
         <p><strong>Hello</strong> {isAuthenticated().user.name}</p>
         <p><strong>Email:</strong> {isAuthenticated().user.email}</p>
         <p>

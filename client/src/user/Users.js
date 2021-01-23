@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { list } from './apiUser'
 import { Link } from 'react-router-dom'
+import DefaultProfile from '../images/avatar.jpg'
 
 class Users extends Component {
 
@@ -22,12 +23,42 @@ class Users extends Component {
     })
   }
 
+  renderUsers = users => (
+    <div className="row">
+      {users.map((user, i) =>(
+        <div className='card bg-light mb-5 border-primary p-2 col-md-4'
+          style={{width: '18rem'}}
+          key={i}>
+            <img className='card-img-top' 
+              src={DefaultProfile} 
+              alt={user.name}
+              style={{width: '100%', height: '15vw', objectFit: 'cover'}}/>
+          <div className="card-body">
+            <h5 className="card-title text-primary"><strong>{user.name}</strong></h5>
+            <p className="card-text">{user.email}</p>
+            <p>
+            <strong>Joined: </strong> 
+            {`${new Date(user.created).toDateString()}`}
+            </p>
+            <Link
+              to={`/user/${user._id}`}
+              className="btn btn-raised btn-outline-primary btn-sm">
+                View Profile
+            </Link>
+          </div>
+        </div>
+      ))}
+      </div>
+  )
+
   render() {
+    const {users} = this.state
     return (
       <div className='container'>
-        <h2 className='mt-5 mb-5 text-primary'>
+        <h2 className='mt-5 mb-5 text-primary text-center'>
           <strong>Members</strong>
         </h2>
+        {this.renderUsers(users)}
       </div>
     )
   }
