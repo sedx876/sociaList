@@ -14,10 +14,10 @@ class DeleteUser extends Component {
         const userId = this.props.userId;
         remove(userId, token).then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.table(data.error);
             } else {
                 // signout user
-                signout(() => console.log("User is deleted"));
+                signout(() => console.table("User is deleted"));
                 // redirect
                 this.setState({ redirect: true });
             }
@@ -38,12 +38,11 @@ class DeleteUser extends Component {
             return <Redirect to="/" />;
         }
         return (
-            <button
-                onClick={this.deleteConfirmed}
-                className="btn btn-raised btn-outline-danger"
-            >
-                Delete Profile
-            </button>
+          <button
+            onClick={this.deleteConfirmed}
+            className="btn btn-raised btn-outline-danger">
+            Delete Profile
+          </button>
         );
     }
 }

@@ -1,18 +1,39 @@
-import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
-import {signup} from '../auth/index'
+import React, { Component } from "react";
+import { isAuthenticated } from "../auth";
+import { read, update, updateUser } from "./apiUser";
+import { Redirect } from "react-router-dom";
+import DefaultProfile from "../images/avatar.jpg";
 
-class Signup extends Component{
+class EditProfile extends Component {
 
   constructor(){
     super()
     this.state = {
+      id: '',
       name: '',
       email: '',
-      password: '',
-      error: '',
-      open: false
+      password: ''
     }
+  }
+
+  init = userId => {
+    const token = isAuthenticated().token
+    read(userId, token)
+    .then(data => {
+      if(data.error){
+        this.setState({ redirectToSignIn: true })
+        console.table('ERROR')
+      }else{
+        this.setState({ id: data._id, name: data.name, email: data.email })
+        console.table(data)
+      }
+    })
+    console.table('User ID from Route Params', this.props.match.params.userId)
+  }
+
+  componentDidMount(){
+    const userId = this.props.match.params.userId
+    this.init(userId)
   }
 
   clickSubmit = event => {
@@ -24,28 +45,23 @@ class Signup extends Component{
         password
     }
     console.table(user)
-    signup(user)
+    update(user)
     .then(data => {
       if(data.error) this.setState({ error: data.error })
       else this.setState({
         error: '',
         name: '',
         email: '',
-        password: '',
-        open: true
+        password: ''
       })
     })
   }
 
-  
-
-
   handleChange = name => event => {
-    this.setState({ error: "" })
     this.setState({ [name]: event.target.value })
   }
 
-  signupForm = (name, email, password) => (
+  editForm = (name, email, password) => (
     <form>
       <div className='form-group'>
         <label className='text-muted'>Name</label>
@@ -70,38 +86,28 @@ class Signup extends Component{
       <div className='form-group'>
         <label className='text-muted'>Password</label>
         <input 
-          onChange={this.handleChange('password')} 
+           onChange={this.handleChange('password')} 
           type='password' 
           className='form-control'
           value={password}
         />
       </div>
 
-      <button onClick={this.clickSubmit} className='btn btn-raised btn-outline-primary'>Submit</button>
+      <button onClick={this.clickSubmit} className='btn btn-raised btn-outline-primary'>Update Profile</button>
     </form>
   )
 
   render(){
-    const { name, email, password, error, open } = this.state
+    const { name, email, password } = this.state
     return(
-      <div className='container'>
-        <h2 className='mt-5 mb-5'>Signup</h2>
-
-      <div 
-        className='alert alert-danger'
-        style={{ display: error ? '' : 'none'}}>
-          {error}
-      </div>
-
-      <div 
-        className='alert alert-info'
-        style={{ display: open ? '' : 'none'}}>
-          NEW ACCOUNT WAS SUCCESSFULLY CREATED!! PLEASE <Link to='/signin'>Log In</Link>
-      </div>
-        {this.signupForm(name, email, password)}
-      </div>
+    <div className='container'>
+      <h2 className='mt-5 mb-5 text-primary text-center'>
+        <strong>Update Profile</strong>
+        {this.editForm(name, email, password)}
+      </h2>
+    </div>
     )
   }
 }
 
-export default Signup 
+export default EditProfile

@@ -69,13 +69,13 @@ class Profile extends Component {
 
         <div className='col-md-6'>
           {isAuthenticated().user && 
-          isAuthenticated().user._id == user._id && (
+          isAuthenticated().user._id === user._id && (
             <div className='d-inline-block mt-5'>
               <Link className='btn btn-raised btn-outline-secondary mr-5'
                 to={`/user/edit/${this.state.user._id}`}>
                 Edit Profile
               </Link>
-              <DeleteUser/>
+              <DeleteUser userId={user._id}/>
             </div>
           )}
         </div>
