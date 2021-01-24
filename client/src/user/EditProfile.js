@@ -13,7 +13,8 @@ class EditProfile extends Component {
       name: '',
       email: '',
       password: '',
-      redirectToProfile: false
+      redirectToProfile: false,
+      error: ''
     }
   }
 
@@ -41,9 +42,30 @@ class EditProfile extends Component {
     this.init(userId)
   }
 
+  isValid = () => {
+    const {name, email, password} = this.state
+    if(name.length === 0){
+      this.setState({error: 'Name Is Required'})
+    }
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      this.setState({
+        error: "A valid Email is required",
+      });
+      return false
+    }
+    if (password.length >= 1 && password.length <= 5) {
+      this.setState({
+        error: "Password must be at least 6 characters long"
+      })
+      return false
+    }
+    return true
+  }
+
   clickSubmit = event => {
     event.preventDefault()
-    const { name, email, password } = this.state
+    if(this.isValid()){
+      const { name, email, password } = this.state
     const user = {
         name,
         email,
@@ -59,6 +81,7 @@ class EditProfile extends Component {
         redirectToProfile: true
       })
     })
+    }
   }
 
   handleChange = name => event => {
@@ -102,11 +125,17 @@ class EditProfile extends Component {
   )
 
   render(){
-    const { id, name, email, password, redirectToProfile } = this.state
+    const { id, name, email, password, redirectToProfile, error } = this.state
 
     if (redirectToProfile) {
       return <Redirect to={`/user/${id}`} />;
     }
+
+    <div 
+      className='alert alert-danger'
+      style={{ display: error ? '' : 'none'}}>
+      {error}
+    </div>
 
     return(
     <div className='container'>
