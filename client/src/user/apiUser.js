@@ -1,7 +1,7 @@
 export const read = (userId, token) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/user/${userId}`, {
 			method: "GET",
-      headers: {
+    	headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
@@ -10,23 +10,23 @@ export const read = (userId, token) => {
       .then(response => {
           return response.json();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.table(err));
 }
 
 export const update = (userId, token, user) => {
-  console.log("USER DATA UPDATE: ", user);
+  console.table("USER DATA UPDATE: ", user)
   return fetch(`${process.env.REACT_APP_API_URL}/api/user/${userId}`, {
       method: "PUT",
       headers: {
           Accept: "application/json",
           Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(user)
+      body: user
   })
       .then(response => {
-          return response.json();
+          return response.json()
       })
-      .catch(err => console.log(err));
+      .catch(err => console.table(err))
 };
 
 export const remove = (userId, token) => {
@@ -41,7 +41,7 @@ export const remove = (userId, token) => {
       .then(response => {
           return response.json();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.table(err));
 };
 
 export const list = () => {
@@ -51,7 +51,7 @@ export const list = () => {
       .then(response => {
           return response.json();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.table(err));
 };
 
 export const updateUser = (user, next) => {
@@ -78,7 +78,7 @@ export const follow = (userId, token, followId) => {
       .then(response => {
           return response.json();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.table(err));
 };
 
 export const unfollow = (userId, token, unfollowId) => {
@@ -94,7 +94,7 @@ export const unfollow = (userId, token, unfollowId) => {
       .then(response => {
           return response.json();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.table(err));
 };
 
 export const findPeople = (userId, token) => {
@@ -109,5 +109,5 @@ export const findPeople = (userId, token) => {
       .then(response => {
           return response.json();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.table(err));
 }

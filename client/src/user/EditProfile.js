@@ -38,6 +38,7 @@ class EditProfile extends Component {
   }
 
   componentDidMount(){
+    this.userData = new FormData()
     const userId = this.props.match.params.userId
     this.init(userId)
   }
@@ -74,7 +75,7 @@ class EditProfile extends Component {
     console.table(user)
     const userId = this.props.match.params.userId
     const token = isAuthenticated().token
-    update(userId, token, user)
+    update(userId, token, this.userData)
     .then(data => {
       if(data.error) this.setState({ error: data.error })
       else this.setState({
@@ -85,17 +86,32 @@ class EditProfile extends Component {
   }
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value })
+    this.setState({ error: "" })
+    const value = name === "photo" ? event.target.files[0] : event.target.value
+
+    const fileSize = name === "photo" ? event.target.files[0].size : 0
+    this.userData.set(name, value)
+    this.setState({ [name]: value, fileSize })
   }
 
   editForm = (name, email, password) => (
     <form>
+      <div className="form-group">
+        <label className="text-muted">Profile Photo</label>
+        <input
+          onChange={this.handleChange("photo")}
+          type="file"
+          accept="image/*"
+          className="form-control mb-2 mt-3"
+        />
+      </div>
+
       <div className='form-group'>
         <label className='text-muted'>Name</label>
         <input 
           onChange={this.handleChange('name')} 
           type='text' 
-          className='form-control'
+          className='form-control mb-2'
           value={name}
         />
       </div>
