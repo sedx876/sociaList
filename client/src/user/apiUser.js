@@ -1,6 +1,6 @@
 export const read = (userId, token) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/user/${userId}`, {
-      method: "GET",
+			method: "GET",
       headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const update = (userId, token, user) => {
           Accept: "application/json",
           Authorization: `Bearer ${token}`
       },
-      body: user
+      body: JSON.stringify(user)
   })
       .then(response => {
           return response.json();

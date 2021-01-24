@@ -12,7 +12,8 @@ class EditProfile extends Component {
       id: '',
       name: '',
       email: '',
-      password: ''
+      password: '',
+      redirectToProfile: false
     }
   }
 
@@ -21,10 +22,14 @@ class EditProfile extends Component {
     read(userId, token)
     .then(data => {
       if(data.error){
-        this.setState({ redirectToSignIn: true })
+        this.setState({ redirectToProfile: true })
         console.table('ERROR')
       }else{
-        this.setState({ id: data._id, name: data.name, email: data.email })
+        this.setState({ 
+          id: data._id, 
+          name: data.name, 
+          email: data.email,
+          error: ''})
         console.table(data)
       }
     })
@@ -42,17 +47,16 @@ class EditProfile extends Component {
     const user = {
         name,
         email,
-        password
+        password: password || undefined
     }
     console.table(user)
-    update(user)
+    const userId = this.props.match.params.userId
+    const token = isAuthenticated().token
+    update(userId, token, user)
     .then(data => {
       if(data.error) this.setState({ error: data.error })
       else this.setState({
-        error: '',
-        name: '',
-        email: '',
-        password: ''
+        redirectToProfile: true
       })
     })
   }
@@ -98,7 +102,12 @@ class EditProfile extends Component {
   )
 
   render(){
-    const { name, email, password } = this.state
+    const { id, name, email, password, redirectToProfile } = this.state
+
+    if (redirectToProfile) {
+      return <Redirect to={`/user/${id}`} />;
+    }
+
     return(
     <div className='container'>
       <h2 className='mt-5 mb-5 text-primary text-center'>
