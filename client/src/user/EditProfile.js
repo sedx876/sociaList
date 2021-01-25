@@ -14,7 +14,9 @@ class EditProfile extends Component {
       email: '',
       password: '',
       redirectToProfile: false,
-      error: ''
+      error: '',
+      fileSize: 0,
+      loading: false
     }
   }
 
@@ -30,7 +32,8 @@ class EditProfile extends Component {
           id: data._id, 
           name: data.name, 
           email: data.email,
-          error: ''})
+          error: ''
+        })
         console.table(data)
       }
     })
@@ -44,19 +47,33 @@ class EditProfile extends Component {
   }
 
   isValid = () => {
-    const {name, email, password} = this.state
+    const {name, email, password, fileSize} = this.state
+
+    if (fileSize > 1000000) {
+      this.setState({
+        error: "File size should be less than 100kb",
+        loading: false
+      });
+      return false;
+    }
+
     if(name.length === 0){
-      this.setState({error: 'Name Is Required'})
+      this.setState({
+        error: 'Name Is Required',
+        loading: false
+      })
     }
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       this.setState({
         error: "A valid Email is required",
+        loading: false
       });
       return false
     }
     if (password.length >= 1 && password.length <= 5) {
       this.setState({
-        error: "Password must be at least 6 characters long"
+        error: "Password must be at least 6 characters long",
+        loading: false
       })
       return false
     }
@@ -64,24 +81,29 @@ class EditProfile extends Component {
   }
 
   clickSubmit = event => {
-    event.preventDefault()
-    if(this.isValid()){
-      const { name, email, password } = this.state
-    const user = {
-        name,
-        email,
-        password: password || undefined
-    }
-    console.table(user)
-    const userId = this.props.match.params.userId
-    const token = isAuthenticated().token
-    update(userId, token, this.userData)
-    .then(data => {
-      if(data.error) this.setState({ error: data.error })
-      else this.setState({
-        redirectToProfile: true
-      })
-    })
+    event.preventDefault();
+    this.setState({ loading: true });
+
+    if (this.isValid()) {
+      const userId = this.props.match.params.userId;
+      const token = isAuthenticated().token;
+
+      update(userId, token, this.userData).then(data => {
+        if (data.error) {
+          this.setState({ error: data.error });
+        // } else if (isAuthenticated().user.role === "admin") {
+        //   this.setState({
+        //     redirectToProfile: true
+        //   });
+        } 
+        else {
+          updateUser(data, () => {
+            this.setState({
+              redirectToProfile: true
+            });
+          });
+        }
+      });
     }
   }
 
@@ -129,7 +151,7 @@ class EditProfile extends Component {
       <div className='form-group'>
         <label className='text-muted'>Password</label>
         <input 
-           onChange={this.handleChange('password')} 
+          onChange={this.handleChange('password')} 
           type='password' 
           className='form-control'
           value={password}
@@ -141,24 +163,46 @@ class EditProfile extends Component {
   )
 
   render(){
-    const { id, name, email, password, redirectToProfile, error } = this.state
+    const { id, name, email, password, redirectToProfile, error, loading } = this.state
 
     if (redirectToProfile) {
       return <Redirect to={`/user/${id}`} />;
     }
 
-    <div 
-      className='alert alert-danger'
-      style={{ display: error ? '' : 'none'}}>
-      {error}
-    </div>
+    const photoUrl = id
+      ? `${
+          process.env.REACT_APP_API_URL
+        }/user/photo/${id}?${new Date().getTime()}`
+      : DefaultProfile;
 
     return(
     <div className='container'>
       <h2 className='mt-5 mb-5 text-primary text-center'>
         <strong>Update Profile</strong>
-        {this.editForm(name, email, password)}
       </h2>
+
+      <div 
+      className='alert alert-danger'
+      style={{ display: error ? '' : 'none'}}>
+      {error}
+      </div>
+
+      {loading ? (
+          <div className="jumbotron text-center">
+            <h2>Loading...</h2>
+          </div>
+        ) : (
+          ""
+        )}
+
+        <img
+          style={{ height: "200px", width: "auto" }}
+          className="img-thumbnail"
+          src={photoUrl}
+          onError={i => (i.target.src = `${DefaultProfile}`)}
+          alt={name}
+        />
+        {this.editForm(name, email, password)}
     </div>
     )
   }
