@@ -9,6 +9,7 @@ class EditProfile extends Component {
   constructor(){
     super()
     this.state = {
+      user: '',
       id: '',
       name: '',
       email: '',
@@ -163,7 +164,7 @@ class EditProfile extends Component {
   )
 
   render(){
-    const { id, name, email, password, redirectToProfile, error, loading } = this.state
+    const { id, name, email, password, redirectToProfile, error, loading, user } = this.state
 
     if (redirectToProfile) {
       return <Redirect to={`/user/${id}`} />;
@@ -173,7 +174,7 @@ class EditProfile extends Component {
       ? `${
           process.env.REACT_APP_API_URL
         }/user/photo/${id}?${new Date().getTime()}`
-      : DefaultProfile;
+      : DefaultProfile
 
     return(
     <div className='container'>

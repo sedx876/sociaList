@@ -36,13 +36,19 @@ class Profile extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(props) {
-    const userId = props.match.params.userId;
-    this.init(userId);
+    const userId = props.match.params.userId
+    this.init(userId)
   }
 
   render() {
     const { redirectToSignin, user, posts } = this.state
     if (redirectToSignin) return <Redirect to="/signin" />
+
+    const photoUrl = user._id
+      ? `${process.env.REACT_APP_API_URL}/user/photo/${
+          user._id
+        }?${new Date().getTime()}`
+      : DefaultProfile
 
     return (
       <div className='container'>
@@ -54,11 +60,13 @@ class Profile extends Component {
         <div className='card bg-light mb-5 border-primary p-2 text-primary'
           style={{width: '18rem'}}>
         <p className='text-center'><strong>Hello</strong> {user.name}</p>
-        <img className='card-img-top' 
-          src={DefaultProfile} 
-          alt={user.name}
-          style={{width: '100%', height: '15vw', objectFit: 'cover'}}
-        />
+        <img
+              style={{ height: "300px", width: "auto" }}
+              className="img-thumbnail"
+              src={photoUrl}
+              onError={i => (i.target.src = `${DefaultProfile}`)}
+              alt={user.name}
+            />
         <p className='pt-3'><strong>Email:</strong> {user.email}</p>
         <p>
           <strong>Joined: </strong> 

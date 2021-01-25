@@ -1,31 +1,31 @@
-export const signup = (user) => {
+export const signup = user => {
   return fetch(`${process.env.REACT_APP_API_URL}/signup`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(user)
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
   })
-  .then(response => {
-    return response.json()
-  })
-  .catch(err => console.table(err))
+      .then(response => {
+          return response.json();
+      })
+      .catch(err => console.log(err));
 }
 
-export const signin = (user) => {
+export const signin = user => {
   return fetch(`${process.env.REACT_APP_API_URL}/signin`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(user)
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
   })
-  .then(response => {
-    return response.json()
-  })
-  .catch(err => console.table(err))
+      .then(response => {
+          return response.json();
+      })
+      .catch(err => console.log(err));
 }
 
 export const authenticate = (jwt, next) => {
@@ -33,7 +33,7 @@ export const authenticate = (jwt, next) => {
       localStorage.setItem('jwt', JSON.stringify(jwt));
       next();
   }
-};
+}
 
 export const setName = (name, next) => {
   if (typeof window !== 'undefined') {
@@ -43,16 +43,16 @@ export const setName = (name, next) => {
 }
 
 export const signout = next => {
-  if (typeof window !== 'undefined') localStorage.removeItem('jwt')
-  next()
+  if (typeof window !== 'undefined') localStorage.removeItem('jwt');
+  next();
   return fetch(`${process.env.REACT_APP_API_URL}/signout`, {
       method: 'GET'
   })
       .then(response => {
-          console.table('signout', response)
-          return response.json()
+          console.log('signout', response);
+          return response.json();
       })
-      .catch(err => console.table(err))
+      .catch(err => console.log(err));
 }
 
 export const isAuthenticated = () => {
@@ -65,7 +65,7 @@ export const isAuthenticated = () => {
   } else {
       return false;
   }
-};
+}
 
 export const forgotPassword = email => {
   console.log('email: ', email);
@@ -82,7 +82,7 @@ export const forgotPassword = email => {
           return response.json();
       })
       .catch(err => console.log(err));
-};
+}
 
 export const resetPassword = resetInfo => {
   return fetch(`${process.env.REACT_APP_API_URL}/reset-password/`, {
