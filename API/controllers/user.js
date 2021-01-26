@@ -25,8 +25,8 @@ exports.hasAuthorization = (req, res, next) => {
 
 	const authorized = sameUser || adminUser;
 
-	// console.log("req.profile ", req.profile, " req.auth ", req.auth);
-	// console.log("SAMEUSER", sameUser, "ADMINUSER", adminUser);
+	console.table("req.profile ", req.profile, " req.auth ", req.auth)
+	console.table("SAMEUSER", sameUser, "ADMINUSER", adminUser)
 
 	if (!authorized) {
 			return res.status(403).json({
@@ -113,7 +113,8 @@ exports.deleteUser = (req, res, next) => {
 // follow unfollow
 // follow unfollow
 exports.addFollowing = (req, res, next) => {
-	User.findByIdAndUpdate(req.body.userId, { $push: { following: req.body.followId } }, (err, result) => {
+	User.findByIdAndUpdate(req.body.userId, { $push: { following: req.body.followId } }, 
+		(err, result) => {
 			if (err) {
 					return res.status(400).json({ error: err });
 			}
@@ -122,7 +123,8 @@ exports.addFollowing = (req, res, next) => {
 }
 
 exports.addFollower = (req, res) => {
-	User.findByIdAndUpdate(req.body.followId, { $push: { followers: req.body.userId } }, { new: true })
+	User.findByIdAndUpdate(req.body.followId, { $push: { followers: req.body.userId } }, 
+		{ new: true })
 			.populate('following', '_id name')
 			.populate('followers', '_id name')
 			.exec((err, result) => {
