@@ -92,7 +92,4 @@ userSchema.pre("remove", function(next) {
     next();
 });
 
-module.exports = mongoose.model("User", userSchema);
-
-
-
+module.exports = mongoose.model("User", userSchema)

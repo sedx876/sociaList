@@ -25,8 +25,8 @@ exports.hasAuthorization = (req, res, next) => {
 
 	const authorized = sameUser || adminUser;
 
-	console.table("req.profile ", req.profile, " req.auth ", req.auth)
-	console.table("SAMEUSER", sameUser, "ADMINUSER", adminUser)
+	// console.log("req.profile ", req.profile, " req.auth ", req.auth);
+	// console.log("SAMEUSER", sameUser, "ADMINUSER", adminUser);
 
 	if (!authorized) {
 			return res.status(403).json({
@@ -55,7 +55,7 @@ exports.getUser = (req, res) => {
 
 exports.updateUser = (req, res, next) => {
 	let form = new formidable.IncomingForm();
-	// console.log("incoming form data: ", form);
+	console.log("incoming form data: ", form);
 	form.keepExtensions = true;
 	form.parse(req, (err, fields, files) => {
 			if (err) {
@@ -88,14 +88,23 @@ exports.updateUser = (req, res, next) => {
 					res.json(user);
 			});
 	});
-};
+}
 
-exports.userPhoto = (req, res, next) => {
-	if (req.profile.photo.data) {
-			res.set(('Content-Type', req.profile.photo.contentType));
-			return res.send(req.profile.photo.data);
-	}
-	next();
+// exports.userPhoto = (req, res, next) => {
+// 	if (req.profile.photo.data) {
+// 			res.set(("Content-Type", req.profile.photo.contentType));
+// 			return res.send(req.profile.photo.data);
+// 	}
+// 	next();
+// }
+
+exports.userPhoto = (req, res) => {
+  User.findById(req.params.userId, 'photo')
+    .then(user => {
+      res.set({'Content-Type': user.photo.contentType});
+      res.send(user.photo.data);
+    })
+    .catch(err => res.status(500).json(err));
 }
 
 exports.deleteUser = (req, res, next) => {
@@ -108,13 +117,12 @@ exports.deleteUser = (req, res, next) => {
 			}
 			res.json({ message: 'User deleted successfully' });
 	});
-};
+}
 
 // follow unfollow
 // follow unfollow
 exports.addFollowing = (req, res, next) => {
-	User.findByIdAndUpdate(req.body.userId, { $push: { following: req.body.followId } }, 
-		(err, result) => {
+	User.findByIdAndUpdate(req.body.userId, { $push: { following: req.body.followId } }, (err, result) => {
 			if (err) {
 					return res.status(400).json({ error: err });
 			}
@@ -123,8 +131,7 @@ exports.addFollowing = (req, res, next) => {
 }
 
 exports.addFollower = (req, res) => {
-	User.findByIdAndUpdate(req.body.followId, { $push: { followers: req.body.userId } }, 
-		{ new: true })
+	User.findByIdAndUpdate(req.body.followId, { $push: { followers: req.body.userId } }, { new: true })
 			.populate('following', '_id name')
 			.populate('followers', '_id name')
 			.exec((err, result) => {
@@ -163,7 +170,7 @@ exports.removeFollower = (req, res) => {
 					result.salt = undefined;
 					res.json(result);
 			});
-};
+}
 
 exports.findPeople = (req, res) => {
 	let following = req.profile.following;
@@ -176,4 +183,4 @@ exports.findPeople = (req, res) => {
 			}
 			res.json(users);
 	}).select('name');
-};
+}

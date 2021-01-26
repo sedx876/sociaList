@@ -46,4 +46,4 @@ router.param('userId', userById);
 // any route containing :postId, our app will first execute postById()
 router.param('postId', postById);
 
-module.exports = router;
+module.exports = router

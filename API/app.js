@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 const fs = require('fs');
 const cors = require('cors');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv')
 const chalk = require('chalk')
 const colors = require('colors')
 dotenv.config();
@@ -17,27 +17,27 @@ mongoose.connect(
 	process.env.MONGO_URI,
 	{useNewUrlParser: true, useUnifiedTopology: true}
 )
-.then(() => console.log('DB Connected'.brightMagenta.inverse))
+.then(() => console.table('DB Connected'.brightMagenta.inverse))
 
 mongoose.connection.on('error', err => {
-	console.log(`DB connection error: ${err.message}`.red.inverse)
+    console.log(`DB connection error: ${err.message}`);
 })
 
 //Bring in Routes
-const postRoutes = require('./routes/post')
-const authRoutes = require('./routes/auth')
-const userRoutes = require('./routes/user')
+const postRoutes = require('./routes/post');
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 // apiDocs
 app.get('/api', (req, res) => {
-  fs.readFile('docs/apiDocs.json', (err, data) => {
-      if (err) {
-          res.status(400).json({
-              error: err
-          });
-      }
-      const docs = JSON.parse(data);
-      res.json(docs);
-  });
+    fs.readFile('docs/apiDocs.json', (err, data) => {
+        if (err) {
+            res.status(400).json({
+                error: err
+            });
+        }
+        const docs = JSON.parse(data);
+        res.json(docs);
+    });
 })
 
 //Middleware
@@ -58,7 +58,6 @@ const morganMiddleware = morgan(function (tokens, req, res) {
 });
 
 app.use(morganMiddleware)
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
