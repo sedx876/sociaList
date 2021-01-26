@@ -4,6 +4,7 @@ import {isAuthenticated} from '../auth'
 import { read } from "./apiUser"
 import DefaultProfile from '../images/avatar.jpg'
 import DeleteUser from './DeleteUser'
+import FollowProfileButton from './FollowProfileButton'
 
 class Profile extends Component {
 
