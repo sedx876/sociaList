@@ -88,6 +88,13 @@ class Profile extends Component {
           )}
         </div>
         </div>
+        <div className='row'>
+          <div className='col-md-12'>
+          <p className="card lead text-center bg-light mb-5 border-primary p-2 text-primary"
+            style={{width: '18rem'}}>
+              <strong>{user.about}</strong></p>
+          </div>
+        </div>
       </div>
     )
   }

@@ -17,7 +17,8 @@ class EditProfile extends Component {
       redirectToProfile: false,
       error: '',
       fileSize: 0,
-      loading: false
+      loading: false,
+      about: ''
     }
   }
 
@@ -33,7 +34,8 @@ class EditProfile extends Component {
           id: data._id, 
           name: data.name, 
           email: data.email,
-          error: ''
+          error: '',
+          about: data.about
         })
         console.table(data)
       }
@@ -117,7 +119,7 @@ class EditProfile extends Component {
     this.setState({ [name]: value, fileSize })
   }
 
-  editForm = (name, email, password) => (
+  editForm = (name, email, password, about) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Profile Photo</label>
@@ -149,6 +151,16 @@ class EditProfile extends Component {
         />
       </div>
 
+      <div className="form-group">
+        <label className="text-muted">About</label>
+        <textarea
+          onChange={this.handleChange("about")}
+          type="text"
+          className="form-control"
+          value={about}
+        />
+      </div>
+
       <div className='form-group'>
         <label className='text-muted'>Password</label>
         <input 
@@ -164,7 +176,7 @@ class EditProfile extends Component {
   )
 
   render(){
-    const { id, name, email, password, redirectToProfile, error, loading, user } = this.state
+    const { id, name, email, password, redirectToProfile, error, loading, user, about } = this.state
 
     if (redirectToProfile) {
       return <Redirect to={`/user/${id}`} />;
@@ -203,7 +215,9 @@ class EditProfile extends Component {
           onError={i => (i.target.src = `${DefaultProfile}`)}
           alt={name}
         />
-        {this.editForm(name, email, password)}
+
+        {isAuthenticated().user._id === id &&
+        this.editForm(name, email, password, about)}
     </div>
     )
   }
