@@ -51,7 +51,7 @@ class FindPeople extends Component {
             {users.map((user, i) => (
                 <div className="card col-md-4" key={i}>
                     <img
-                        style={{ height: "200px", width: "auto" }}
+                        style={{ height: "300px", width: "auto" }}
                         className="img-thumbnail"
                         src={`${process.env.REACT_APP_API_URL}/user/photo/${
                             user._id
@@ -60,18 +60,18 @@ class FindPeople extends Component {
                         alt={user.name}
                     />
                     <div className="card-body">
-                        <h5 className="card-title">{user.name}</h5>
+                        <h5 className="card-title text-primary text-center"><strong>{user.name}</strong></h5>
                         <p className="card-text">{user.email}</p>
                         <Link
                             to={`/user/${user._id}`}
-                            className="btn btn-raised btn-primary btn-sm"
+                            className="btn btn-raised btn-outline-primary btn-sm"
                         >
                             View Profile
                         </Link>
 
                         <button
                             onClick={() => this.clickFollow(user, i)}
-                            className="btn btn-raised btn-info float-right btn-sm"
+                            className="btn btn-raised btn-outline-info float-right btn-sm"
                         >
                             Follow
                         </button>
