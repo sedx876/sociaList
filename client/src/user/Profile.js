@@ -47,11 +47,22 @@ init = userId => {
   const token = isAuthenticated().token;
   read(userId, token).then(data => {
     if (data.error) {
-      this.setState({ redirectToSignin: true });
+      this.setState({ redirectToSignin: true })
     } else {
-      let following = this.checkFollow(data);
-      this.setState({ user: data, following });
-      //this.loadPosts(data._id);
+      let following = this.checkFollow(data)
+      this.setState({ user: data, following })
+      this.loadPosts(data._id)
+    }
+  })
+}
+
+loadPosts = userId => {
+  const token = isAuthenticated().token;
+  listByUser(userId, token).then(data => {
+    if (data.error) {
+      console.log(data.error);
+    } else {
+      this.setState({ posts: data });
     }
   });
 }

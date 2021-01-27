@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { list } from "./apiPost";
-import DefaultPost from "../images/GoT.jpg";
+import DefaultPost from "../images/GoT.png";
 import { Link } from "react-router-dom";
 
 class Posts extends Component {
