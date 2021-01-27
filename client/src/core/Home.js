@@ -1,5 +1,6 @@
 import React from 'react'
 import soc from '../images/soc.png'
+import Posts from "../post/Posts";
 
 const Home = () => {
   return (
@@ -9,6 +10,9 @@ const Home = () => {
           <br/>
           <img className='soc' src={soc} alt='socialist'/>
       </h1>
+      <div className="container">
+      <Posts />
+    </div>
     </div>
   )
 }
