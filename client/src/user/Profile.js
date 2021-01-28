@@ -134,8 +134,8 @@ loadPosts = userId => {
                 <br/>
                 <div className='row'>
                 <div className='col-md-12'>
-                <p className="card lead text-center bg-light mt-5 mb-5 ml-5 mr-2 border-primary p-2 text-primary"
-                style={{width: '18rem'}}>
+                <p className="card lead text-center bg-light mt-5 mb-5  mr-4 border-primary p-2 text-primary"
+                style={{width: '30rem'}}>
                 <h5 style={{textDecoration: 'underline'}}><strong>About Me:</strong></h5>
                 <strong>{user.about}</strong></p>
                 </div>
