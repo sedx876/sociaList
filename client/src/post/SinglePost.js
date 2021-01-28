@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { singlePost, remove, like, unlike } from './apiPost';
-import DefaultPost from '../images/GoT.png ';
+import DefaultPost from "../images/GoT.png"
 import { Link, Redirect } from 'react-router-dom';
 import { isAuthenticated } from '../auth';
 import Comment from './Comment';

@@ -75,7 +75,7 @@ class Posts extends Component {
                                 </p>
                                 <Link
                                     to={`/post/${post._id}`}
-                                    className="btn btn-raised btn-outline-primary btn-sm"
+                                    className="btn btn-raised btn-primary btn-sm"
                                 >
                                     Read more
                                 </Link>
@@ -93,7 +93,7 @@ class Posts extends Component {
             <div className="container">
                 <h2 className="mt-5 mb-5">
                     {!posts.length ? 
-                    "No more posts!" 
+                    "You have reached the end of the posts!!" 
                     : 
                     <h3 className='mt-5 mb-5 text-primary text-center'>
                       <strong>Recent Posts</strong>

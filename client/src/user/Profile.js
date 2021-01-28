@@ -117,14 +117,14 @@ loadPosts = userId => {
 
               <div className="d-inline-block">
                 <Link
-                  className="btn btn-raised btn-outline-info mr-4"
+                  className="btn btn-raised btn-info mr-4"
                   to={`/post/create`}
                 >
                   Create Post
                 </Link>
 
                 <Link
-                  className="btn btn-raised btn-outline-success mr-4"
+                  className="btn btn-raised btn-success mr-4"
                   to={`/user/edit/${user._id}`}
                 >
                   Edit Profile
