@@ -48,7 +48,7 @@ class Posts extends Component {
                         : " Unknown";
 
                     return (
-                        <div className="card col-md-4" key={i}>
+                        <div className="card col-md-4 mb-2" key={i}>
                             <div className="card-body">
                                 <img
                                     src={`${

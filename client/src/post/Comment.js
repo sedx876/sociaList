@@ -17,7 +17,7 @@ class Comment extends Component {
 
     isValid = () => {
         const { text } = this.state;
-        if (!text.length > 0 || text.length > 150) {
+        if (!text.length > 0 || text.length > 5000) {
             this.setState({
                 error:
                     "Comment should not be empty and less than 150 characters long"
@@ -151,9 +151,7 @@ class Comment extends Component {
                                                     <>
                                                         <button className='btn btn-raised btn-outline-danger btn-sm float-right mr-1'
                                                             onClick={() =>
-                                                            this.deleteConfirmed(comment)}
-                                                            // className="text-danger float-right mr-1"
-                                                        >
+                                                            this.deleteConfirmed(comment)}>
                                                             Remove
                                                         </button>
                                                     </>

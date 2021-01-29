@@ -4,7 +4,7 @@ const expressJwt = require('express-jwt')
 const User = require('../models/user')
 const _ = require('lodash')
 //const { OAuth2Client } = require('google-auth-library')
-//const { sendEmail } = require('../helpers')
+const { sendEmail } = require('../helpers')
 
 exports.signup = async (req, res) => {
 	const userExists = await User.findOne({ email: req.body.email })

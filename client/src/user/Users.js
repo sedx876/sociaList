@@ -59,7 +59,7 @@ class Users extends Component {
     return (
       <div className='container'>
         <h2 className='mt-5 mb-5 text-primary text-center'>
-          <strong>Members</strong>
+          <strong>Members Directory</strong>
         </h2>
         {this.renderUsers(users)}
       </div>

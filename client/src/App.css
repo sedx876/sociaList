@@ -1,4 +1,13 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+
 .soc{
   width:300;
   height:300px;
+}
+
+*{
+  /* font-family: 'Fredoka One', cursive; */
+  font-family: 'Special Elite', cursive;
 }

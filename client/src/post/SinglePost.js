@@ -95,8 +95,8 @@ class SinglePost extends Component {
           onError={i => (i.target.src = `${DefaultPost}`)}
           className="img-thunbnail mb-3"
           style={{
-              height: '300px',
-              width: '100%',
+              height: '50%',
+              width: '50%',
               objectFit: 'cover'
           }}
       />
@@ -104,7 +104,7 @@ class SinglePost extends Component {
         {like ? (
           <h3 onClick={this.likeToggle}>
             <i
-                className="fa fa-thumbs-up text-success bg-dark"
+                className="fa fa-thumbs-up text-success bg-light"
                 style={{ padding: '10px', borderRadius: '50%' }}
             />{' '}
             {likes} Like
@@ -112,7 +112,7 @@ class SinglePost extends Component {
         ) : (
           <h3 onClick={this.likeToggle}>
             <i
-              className="fa fa-thumbs-up text-warning bg-dark"
+              className="fa fa-thumbs-up text-warning bg-light"
               style={{ padding: '10px', borderRadius: '50%' }}
             />{' '}
             {likes} Like

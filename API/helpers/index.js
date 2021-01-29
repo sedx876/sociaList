@@ -9,12 +9,12 @@ exports.sendEmail = emailData => {
     secure: false,
     requireTLS: true,
     auth: {
-      user: "masterjupiter2015@gmail.com",
-      pass: "kshzlmomlthllktq"
+      user: "swatkins876@gmail.com",
+      pass: "quxrnqrjhfqdvlgr"
     }
   });
   return transporter
     .sendMail(emailData)
-    .then(info => console.log(`Message sent: ${info.response}`))
-    .catch(err => console.log(`Problem sending email: ${err}`));
+    .then(info => console.log(`Message sent: ${info.response}`.green.inverse))
+    .catch(err => console.log(`Problem sending email: ${err}`.red.inverse));
 }
