@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { isAuthenticated } from "../auth";
-import { read, update, updateUser } from "./apiUser";
-import { Redirect } from "react-router-dom";
+import React, { Component } from "react"
+import { isAuthenticated } from "../auth"
+import { read, update, updateUser } from "./apiUser"
+import { Redirect } from "react-router-dom"
 import DefaultProfile from "../images/avatar.jpg"
 
 class EditProfile extends Component {
@@ -17,14 +17,14 @@ class EditProfile extends Component {
       fileSize: 0,
       loading: false,
       about: ""
-    };
+    }
   }
 
   init = userId => {
     const token = isAuthenticated().token;
     read(userId, token).then(data => {
       if (data.error) {
-        this.setState({ redirectToProfile: true });
+        this.setState({ redirectToProfile: true })
       } else {
         this.setState({
           id: data._id,
@@ -32,82 +32,77 @@ class EditProfile extends Component {
           email: data.email,
           error: "",
           about: data.about
-        });
+        })
       }
-    });
+    })
   }
 
   componentDidMount() {
     this.userData = new FormData()
-    const userId = this.props.match.params.userId;
-    this.init(userId);
+    const userId = this.props.match.params.userId
+    this.init(userId)
   }
 
   isValid = () => {
-    const { name, email, password, fileSize } = this.state;
+    const { name, email, password, fileSize } = this.state
     if (fileSize > 1000000) {
       this.setState({
         error: "File size should be less than 100kb",
         loading: false
-      });
-      return false;
+      })
+      return false
     }
     if (name.length === 0) {
-      this.setState({ error: "Name is required", loading: false });
-      return false;
+      this.setState({ error: "Name is required", loading: false })
+      return false
     }
     // email@domain.com
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       this.setState({
         error: "A valid Email is required",
         loading: false
-      });
-      return false;
+      })
+      return false
     }
     if (password.length >= 1 && password.length <= 5) {
       this.setState({
         error: "Password must be at least 6 characters long",
         loading: false
       });
-      return false;
+      return false
     }
-    return true;
+    return true
   }
 
   handleChange = name => event => {
-    this.setState({ error: "" });
-    const value = name === "photo" ? event.target.files[0] : event.target.value;
-
-    const fileSize = name === "photo" ? event.target.files[0].size : 0;
-    this.userData.set(name, value);
-    this.setState({ [name]: value, fileSize });
+    this.setState({ error: "" })
+    const value = name === "photo" ? event.target.files[0] : event.target.value
+    const fileSize = name === "photo" ? event.target.files[0].size : 0
+    this.userData.set(name, value)
+    this.setState({ [name]: value, fileSize })
   }
 
   clickSubmit = event => {
-    event.preventDefault();
-    this.setState({ loading: true });
-
+    event.preventDefault()
+    this.setState({ loading: true })
     if (this.isValid()) {
-      const userId = this.props.match.params.userId;
-      const token = isAuthenticated().token;
-
-      
-
+      const userId = this.props.match.params.userId
+      const token = isAuthenticated().token
       update(userId, token, this.userData).then(data => {
         if (data.error) {
-          this.setState({ error: data.error });
+          this.setState({ error: data.error })
         } else if (isAuthenticated().user.role === "admin") {
           this.setState({
             redirectToProfile: true
-          });
+          })
         } else {
           updateUser(data, () => {
             this.setState({
               redirectToProfile: true
-            });
-          });
+            })
+          })
         }
-      });
+      })
     }
   }
 
@@ -163,7 +158,10 @@ class EditProfile extends Component {
         />
       </div>
 
-      <button onClick={this.clickSubmit} className='btn btn-raised btn-outline-primary'>Update Profile</button>
+      <button onClick={this.clickSubmit} 
+        className='btn btn-raised btn-outline-primary'>
+          Update Profile
+      </button>
     </form>
   )
 

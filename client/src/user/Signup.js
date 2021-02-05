@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 import {signup} from '../auth/index'
 
 class Signup extends Component{
-
   constructor(){
     super()
     this.state = {
@@ -19,9 +18,9 @@ class Signup extends Component{
     event.preventDefault()
     const { name, email, password } = this.state
     const user = {
-        name,
-        email,
-        password
+      name,
+      email,
+      password
     }
     console.table(user)
     signup(user)
@@ -36,9 +35,6 @@ class Signup extends Component{
       })
     })
   }
-
-  
-
 
   handleChange = name => event => {
     this.setState({ error: "" })
@@ -56,7 +52,6 @@ class Signup extends Component{
           value={name}
         />
       </div>
-
       <div className='form-group'>
         <label className='text-muted'>Email</label>
         <input 
@@ -66,7 +61,6 @@ class Signup extends Component{
           value={email}
         />
       </div>
-
       <div className='form-group'>
         <label className='text-muted'>Password</label>
         <input 
@@ -76,8 +70,8 @@ class Signup extends Component{
           value={password}
         />
       </div>
-
-      <button onClick={this.clickSubmit} className='btn btn-raised btn-outline-primary'>Submit</button>
+      <button onClick={this.clickSubmit} 
+        className='btn btn-raised btn-outline-primary'>Submit</button>
     </form>
   )
 
@@ -86,13 +80,11 @@ class Signup extends Component{
     return(
       <div className='container'>
         <h2 className='mt-5 mb-5'>Signup</h2>
-
       <div 
         className='alert alert-danger'
         style={{ display: error ? '' : 'none'}}>
           {error}
       </div>
-
       <div 
         className='alert alert-info'
         style={{ display: open ? '' : 'none'}}>

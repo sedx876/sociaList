@@ -3,7 +3,6 @@ import { Link, Redirect } from "react-router-dom"
 import { signin, authenticate } from "../auth"
 
 class Signin extends Component{
-
   constructor(){
     super()
     this.state = {
@@ -20,8 +19,8 @@ class Signin extends Component{
     this.setState({loading: true})
     const { email, password } = this.state
     const user = {
-        email,
-        password
+      email,
+      password
     }
     console.table(user)
     signin(user)
@@ -54,7 +53,6 @@ class Signin extends Component{
           value={email}
         />
       </div>
-
       <div className='form-group'>
         <label className='text-muted'>Password</label>
         <input 
@@ -64,21 +62,18 @@ class Signin extends Component{
           value={password}
         />
       </div>
-
       <button onClick={this.clickSubmit} className='btn btn-raised btn-primary'>Submit</button>
     </form>
   )
 
   render(){
     const { email, password, error, redirectToReferer, loading } = this.state
-    
     if (redirectToReferer) {
       return <Redirect to="/" />;
-  }
+    }
     return(
       <div className='container'>
         <h2 className='mt-5 mb-5'>Log In</h2>
-
       <div 
         className='alert alert-danger'
         style={{ display: error ? '' : 'none'}}>

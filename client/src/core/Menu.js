@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { signout, isAuthenticated } from '../auth';
+import React, { Fragment } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import { signout, isAuthenticated } from '../auth'
 import soc from '../images/soc.png'
 
 
@@ -43,7 +43,6 @@ const Menu = ({history}) => (
 
   {isAuthenticated() && 
   <>
-
     <li className="nav-item">
       <Link to={`/findpeople`} style={isActive(history, `/findpeople`)} className="nav-link">
         Find People
