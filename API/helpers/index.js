@@ -1,6 +1,6 @@
-const nodeMailer = require("nodemailer");
+const nodeMailer = require("nodemailer")
 
-const defaultEmailData = { from: "noreply@node-react.com" };
+const defaultEmailData = { from: "noreply@node-react.com" }
 
 exports.sendEmail = emailData => {
   const transporter = nodeMailer.createTransport({
@@ -12,9 +12,9 @@ exports.sendEmail = emailData => {
       user: "swatkins876@gmail.com",
       pass: "quxrnqrjhfqdvlgr"
     }
-  });
+  })
   return transporter
     .sendMail(emailData)
     .then(info => console.log(`Message sent: ${info.response}`.green.inverse))
-    .catch(err => console.log(`Problem sending email: ${err}`.red.inverse));
+    .catch(err => console.log(`Problem sending email: ${err}`.red.inverse))
 }
